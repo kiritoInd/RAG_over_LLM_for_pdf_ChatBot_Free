@@ -7,25 +7,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Chatbot Interface</h1>
-    <form id="query-form">
-        <label for="query">Enter your query:</label>
-        <input type="text" id="query" name="query" required>
-        <button type="submit">Submit</button>
-    </form>
-    
-    <h2>Upload a PDF:</h2>
-    <form id="upload-form" enctype="multipart/form-data">
-        <label for="file">Choose a file:</label>
-        <input type="file" id="file" name="file" accept=".pdf" required>
-        <button type="submit">Upload</button>
-    </form>
+    <h1>Retrieval-Augmented Generation On PDF</h1>
+    <!-- <h2>CHAT:</h2> -->
+    <div id="chat-container">
+        <div id="results">
+            <!-- Chat messages will be appended here -->
+             <h3 class="h3_middle">Upload a PDF and ask a question about it. It won't answer questions outside the content of the PDF</h3>
+        </div>
+    </div>
 
-    <h2>Results:</h2>
-    <div id="results"></div>
+
+    
+    <div class="upload_input_div">
+        <form id="upload-form" class="file-label" enctype="multipart/form-data">
+            <input type="file" id="file" name="file" accept=".pdf" required>
+            <button type="submit">Upload</button>
+        </form>
+        <form id="query-form">
+            <label for="query">Enter your query:</label>
+            <input type="text" id="query" name="query" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+  
 
     <script>
-        document.getElementById('query-form').addEventListener('submit', function(event) {
+       document.getElementById('query-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const query = document.getElementById('query').value;
             fetch('/query', {
@@ -37,13 +45,21 @@
             })
             .then(response => response.json())
             .then(data => {
+                const h3_middle = document.querySelector('.h3_middle');
+                h3_middle.style.display = 'none';
                 const resultsDiv = document.getElementById('results');
-                resultsDiv.innerHTML = '';
-                const p = document.createElement('p');
-                p.textContent = data.helpful_answer;
-                resultsDiv.appendChild(p);
+                const userMessage = document.createElement('p');
+                userMessage.textContent = `You: ${query}`;
+                userMessage.style.fontWeight = 'bold';
+                const botMessage = document.createElement('p');
+                botMessage.textContent = `Bot: ${data.helpful_answer}`;
+                resultsDiv.appendChild(userMessage);
+                resultsDiv.appendChild(botMessage);
+                // Optionally scroll to the bottom of the chat
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
             });
         });
+
 
         document.getElementById('upload-form').addEventListener('submit', function(event) {
             event.preventDefault();

@@ -1,17 +1,16 @@
 from flask import Flask, request, jsonify, render_template
-
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'Upload/'
 
-# Your existing code for loading documents and setting up the conversational chain
-from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import DocArrayInMemorySearch
 from langchain.document_loaders import PyPDFLoader
 from langchain.chains import ConversationalRetrievalChain
 from langchain_community.document_loaders import WebBaseLoader
-from langchain.llms import HuggingFaceHub
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.llms import HuggingFaceHub
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 import os
 from dotenv import load_dotenv
@@ -82,8 +81,10 @@ def query():
     query = request.json["query"]
     result = qa({"question": query, "chat_history": []})
     helpful_answer = result['answer'].split('Helpful Answer: ')[-1]
+    question = result['question']
     response = {
-        'helpful_answer': helpful_answer
+        'helpful_answer': helpful_answer,
+        'question' : question,
     }
     return jsonify(response)
 
