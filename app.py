@@ -17,7 +17,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-repo_id = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+repo_id = "mistralai/Mixtral-8x7B-Instruct-v0.1" #llm id
+
+# llm to use Note - You Have to take the persmition from hugging face key
 llm = HuggingFaceHub(
     repo_id=repo_id,
     model_kwargs={"temperature": 0.8, "top_k": 50},
@@ -61,6 +63,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
+
 def upload_file():
     if 'file' not in request.files:
         return 'No file part'
@@ -76,7 +79,9 @@ def upload_file():
         qa = load_db(loaded_file, "stuff", 4)
         return 'File uploaded successfully'
 
+
 @app.route('/query', methods=['POST'])
+
 def query():
     query = request.json["query"]
     result = qa({"question": query, "chat_history": []})

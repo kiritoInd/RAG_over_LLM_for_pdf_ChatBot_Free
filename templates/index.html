@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Interface</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Retrieval-Augmented Generation On PDF</h1>
-    <!-- <h2>CHAT:</h2> -->
     <div id="chat-container">
         <div id="results">
-            <!-- Chat messages will be appended here -->
              <h3 class="h3_middle">Upload a PDF and ask a question about it. It won't answer questions outside the content of the PDF</h3>
         </div>
     </div>
-
-
-    
     <div class="upload_input_div">
         <form id="upload-form" class="file-label" enctype="multipart/form-data">
             <input type="file" id="file" name="file" accept=".pdf" required>
@@ -29,9 +22,6 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-
-  
-
     <script>
        document.getElementById('query-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -55,18 +45,14 @@
                 botMessage.textContent = `Bot: ${data.helpful_answer}`;
                 resultsDiv.appendChild(userMessage);
                 resultsDiv.appendChild(botMessage);
-                // Optionally scroll to the bottom of the chat
                 resultsDiv.scrollTop = resultsDiv.scrollHeight;
             });
         });
-
-
         document.getElementById('upload-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const fileInput = document.getElementById('file');
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
-            
             fetch('/upload', {
                 method: 'POST',
                 body: formData
