@@ -1,0 +1,11 @@
+flask
+flask_cors
+flask-restful
+langchain
+langchain-community
+sentence-transformers
+numpy
+Werkzeug  
+docarray  
+pypdf 
+langchain_huggingface
