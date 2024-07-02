@@ -19,7 +19,7 @@ You will also need a hugging face token which you can easliy find on your huggin
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/kiritoInd/RAG_On_PDF_Free.git
+    git clone https://github.com/kiritoInd/RAG_over_LLM_for_pdf_ChatBot.git
     cd ChatBot-With-LangChain
     ```
 
@@ -29,7 +29,7 @@ You will also need a hugging face token which you can easliy find on your huggin
     pip install -r requirements.txt
     ```
 
-3. Enter you Hugging Face Token
+3. Enter your Hugging Face Token
 
 ## Running the Application
 
@@ -65,7 +65,7 @@ RAG_On_PDF_ChatBot/
 1. Open your web browser and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 2. Upload your Pdf file
 3. Enter your query in the input box and submit.
-4. The chatbot will process your query and display the results (The result be provide with the top kth similar queries results change the value of k according to your need ).
+4. The chatbot will process your query and display the results.
 5. You can ask follow up quetion 
 
 ## Contributing
