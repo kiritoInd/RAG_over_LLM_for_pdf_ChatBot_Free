@@ -14,7 +14,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 import os
 from dotenv import load_dotenv
-
+chat_history = []   
 load_dotenv()
 
 repo_id = "mistralai/Mixtral-8x7B-Instruct-v0.1" #llm id
@@ -84,7 +84,8 @@ def upload_file():
 
 def query():
     query = request.json["query"]
-    result = qa({"question": query, "chat_history": []})
+    result = qa({"question": query, "chat_history": chat_history})
+    chat_history.append((query, result["answer"]))
     helpful_answer = result['answer'].split('Helpful Answer: ')[-1]
     question = result['question']
     response = {
