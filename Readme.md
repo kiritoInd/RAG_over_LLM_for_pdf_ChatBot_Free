@@ -2,7 +2,7 @@
 
 ## Preview
 
-<img src="image.png" width="400" height="500" alt="Preview">
+<img src="image.png" width="300" height="500" alt="Preview">
 
 ## Overview
 
