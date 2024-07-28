@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Chatbot Interface</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <h1>Retrieval-Augmented Generation On PDF</h1>
-    <div id="chat-container">
-        <div id="results">
-             <h3 class="h3_middle">Upload a PDF and ask a question about it. It won't answer questions outside the content of the PDF</h3>
+    <div class="chat">
+        <div class="chat-title">
+            <h1>RAG</h1>
+            <h2>Company Name</h2>
+            <figure class="avatar">
+                <img src="https://avatarfiles.alphacoders.com/374/374883.png" />
+            </figure>
         </div>
-    </div>
-    <div class="upload_input_div">
-        <form id="upload-form" class="file-label" enctype="multipart/form-data">
-            <input type="file" id="file" name="file" accept=".pdf" required>
-            <button type="submit">Upload</button>
+        <div class="messages">
+            <div class="messages-content" id="results"></div>
+        </div>
+        <div class="message-box">
+            <textarea id="query" class="message-input" placeholder="Type message..."></textarea>
+            <button id="send-message" type="submit" class="message-submit">Send</button>
+        </div>
+        <form id="upload-form">
+            <div class="file-input">
+                <input type="file" name="file-input" id="file-input" class="file-input__input" />
+                <label class="file-input__label" for="file-input">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload"
+                        class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512">
+                        <path fill="currentColor"
+                            d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z">
+                        </path>
+                    </svg>
+                    <span>Upload PDF</span></label>
+            </div>
+            <div class="buttondiv">
+                <button type="submit">Submit</button>
+            </div>
+           
         </form>
-        <form id="query-form">
-            <label for="query">Enter your query:</label>
-            <input type="text" id="query" name="query" required>
-            <button type="submit">Submit</button>
-        </form>
     </div>
+
     <script>
-       document.getElementById('query-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('send-message').addEventListener('click', function () {
             const query = document.getElementById('query').value;
+            if (!query.trim()) return;
+
+            const resultsDiv = document.getElementById('results');
+
+            // Show user's message with bounce effect
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message message-personal new';
+            userMessage.textContent = `You: ${query}`;
+            resultsDiv.appendChild(userMessage);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+            // Show a loading indicator while waiting for the response
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = 'message loading';
+            loadingMessage.innerHTML = '<span></span>';
+            resultsDiv.appendChild(loadingMessage);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
             fetch('/query', {
                 method: 'POST',
                 headers: {
@@ -33,24 +70,25 @@
                 },
                 body: JSON.stringify({ query: query })
             })
-            .then(response => response.json())
-            .then(data => {
-                const h3_middle = document.querySelector('.h3_middle');
-                h3_middle.style.display = 'none';
-                const resultsDiv = document.getElementById('results');
-                const userMessage = document.createElement('p');
-                userMessage.textContent = `You: ${query}`;
-                userMessage.style.fontWeight = 'bold';
-                const botMessage = document.createElement('p');
-                botMessage.textContent = `Bot: ${data.helpful_answer}`;
-                resultsDiv.appendChild(userMessage);
-                resultsDiv.appendChild(botMessage);
-                resultsDiv.scrollTop = resultsDiv.scrollHeight;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // Remove loading message
+                    loadingMessage.remove();
+
+                    // Show bot's response with bounce effect
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message new';
+                    botMessage.innerHTML = `Bot: ${data.helpful_answer}`;
+                    resultsDiv.appendChild(botMessage);
+                    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+                });
+
+            // Clear input field
+            document.getElementById('query').value = '';
         });
-        document.getElementById('upload-form').addEventListener('submit', function(event) {
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
             event.preventDefault();
-            const fileInput = document.getElementById('file');
+            const fileInput = document.getElementById('file-input');
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
             fetch('/upload', {
@@ -60,8 +98,13 @@
             .then(response => response.text())
             .then(data => {
                 alert(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('File upload failed!');
             });
         });
     </script>
 </body>
+
 </html>

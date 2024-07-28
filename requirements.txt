@@ -9,3 +9,4 @@ Werkzeug
 docarray  
 pypdf 
 langchain_huggingface
+openai
