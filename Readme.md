@@ -1,4 +1,4 @@
-# Retrieval-Augmented Generation with Mistral AI and Flask on PDF
+# Retrieval-Augmented Generation with LLM's and Flask on PDF
 
 ## Preview
 
