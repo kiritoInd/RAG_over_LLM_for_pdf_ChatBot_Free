@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
 app.config['UPLOAD_FOLDER'] = 'Upload/'
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -13,8 +14,11 @@ from langchain_community.llms import HuggingFaceHub
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 import os
+
 from dotenv import load_dotenv
+
 chat_history = []   
+
 load_dotenv()
 
 repo_id = "mistralai/Mixtral-8x7B-Instruct-v0.1" #llm id
@@ -28,6 +32,7 @@ llm = HuggingFaceHub(
 
 def load_db(file, chain_type, k):
     # Load documents
+
     loader = PyPDFLoader(file)
     documents = loader.load()
 
@@ -84,10 +89,13 @@ def upload_file():
 
 def query():
     query = request.json["query"]
+    
     result = qa({"question": query, "chat_history": chat_history})
     chat_history.append((query, result["answer"]))
+
     helpful_answer = result['answer'].split('Helpful Answer: ')[-1]
     question = result['question']
+
     response = {
         'helpful_answer': helpful_answer,
         'question' : question,

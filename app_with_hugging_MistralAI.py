@@ -64,8 +64,10 @@ loaded_file = "MachineLearning-Lecture01.pdf"
 qa = load_db(loaded_file, "stuff", 4)
 
 @app.route('/')
+
 def index():
     return render_template('index.html')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -83,6 +85,7 @@ def upload_file():
         return 'File uploaded successfully'
 
 @app.route('/query', methods=['POST'])
+
 def query():
     query = request.json["query"]
     result = qa({"question": query, "chat_history": chat_history})

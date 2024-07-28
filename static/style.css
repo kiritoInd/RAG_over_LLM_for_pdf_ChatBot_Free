@@ -1,20 +1,13 @@
-/*--------------------
-Mixins
---------------------*/
-/*--------------------
-Body
---------------------*/
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 html,
 body {
   height: 100%;
 }
-
 body {
   background: #202023;
   background-size: cover;
@@ -23,11 +16,6 @@ body {
   line-height: 1.3;
   overflow: hidden;
 }
-
-
-/*--------------------
-Chat
---------------------*/
 .chat {
   position: absolute;
   top: 50%;
@@ -45,10 +33,6 @@ Chat
   justify-content: space-between;
   flex-direction: column;
 }
-
-/*--------------------
-Chat Title
---------------------*/
 .chat-title {
   flex: 0 1 45px;
   position: relative;
@@ -88,10 +72,6 @@ Chat Title
   width: 100%;
   height: auto;
 }
-
-/*--------------------
-Messages
---------------------*/
 .messages {
   flex: 1 1 auto;
   color: rgba(255, 255, 255, 0.5);
@@ -99,7 +79,6 @@ Messages
   position: relative;
   width: 100%;
   overflow-y: auto;
-
 }
 .messages .messages-content {
   position: absolute;
@@ -108,7 +87,6 @@ Messages
   height: 101%;
   width: 100%;
   padding: 0px 5px;
-
 }
 .messages .message {
   clear: both;
@@ -119,10 +97,8 @@ Messages
   margin: 8px 0;
   font-size: 11px;
   line-height: 1.4;
-  /* margin-left: 35px; */
   position: relative;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-
 }
 .messages .message .timestamp {
   position: absolute;
@@ -137,23 +113,6 @@ Messages
   border-top: 6px solid rgba(0, 0, 0, 0.3);
   left: 0;
   border-right: 7px solid transparent;
-}
-.messages .message .avatar {
-  position: absolute;
-  z-index: 1;
-  bottom: -15px;
-  left: -35px;
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  border: 2px solid rgba(255, 255, 255, 0.24);
-}
-.messages .message .avatar img {
-  width: 100%;
-  height: auto;
 }
 .messages .message.message-personal {
   float: right;
@@ -241,10 +200,6 @@ Messages
   -webkit-animation-delay: 0.3s;
           animation-delay: 0.3s;
 }
-
-/*--------------------
-Message Box
---------------------*/
 .message-box {
   flex: 0 1 40px;
   width: 100%;
@@ -263,7 +218,6 @@ Message Box
   margin: 0;
   padding-right: 20px;
   width: 265px;
-
 }
 .message-box textarea:focus:-webkit-placeholder {
   color: transparent;
@@ -287,88 +241,18 @@ Message Box
 .message-box .message-submit:hover {
   background: #B692C2;
 }
-
-/*--------------------
-Custom Srollbar
---------------------*/
-
-/* ::-webkit-scrollbar { */
-  /* margin: 1px -3px 1px 0; */
-
-  /* width: 10px; */
-/* } */
-
-/* ::-webkit-scrollbar {
-  margin-right: 0px;
-  padding: 0 10px;
-} */
-
-/* ::-webkit-scrollbar {
-  background-color: rgba(168, 71, 71, 0.5) !important;
-} */
-
-/* Custom scrollbar for WebKit browsers */
 ::-webkit-scrollbar {
-    width: 5px; /* Width of the scrollbar */
+    width: 5px;
 }
-
 ::-webkit-scrollbar-track {
-    background: #202023; /* Background color of the scrollbar track */
+    background: #202023; 
 }
-
 ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar handle */
-    border-radius: 6px; /* Roundness of the scrollbar handle */
+    background: #888; 
+    border-radius: 6px; 
 }
-
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color of the scrollbar handle on hover */
-}
-
-
-/*--------------------
-Bounce
---------------------*/
-@-webkit-keyframes bounce {
-  0% {
-    transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  4.7% {
-    transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  9.41% {
-    transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  14.11% {
-    transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  18.72% {
-    transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  24.32% {
-    transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  29.93% {
-    transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  35.54% {
-    transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  41.04% {
-    transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  52.15% {
-    transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  63.26% {
-    transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  85.49% {
-    transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
-  100% {
-    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
+    background: #555;
 }
 @keyframes bounce {
   0% {
@@ -430,7 +314,6 @@ Bounce
 .file-input{
   margin: auto;
 }
-
 .file-input__input {
   width: 0.1px;
   height: 0.1px;
@@ -439,7 +322,6 @@ Bounce
   position: absolute;
   z-index: -1;
 }
-
 .file-input__label {
   width: 280px;
   margin: 10px;
@@ -457,7 +339,6 @@ Bounce
   text-transform: uppercase;
   font-family: "Open Sans", sans-serif;
 }
-
 .file-input__label svg {
   height: 9px;
   margin-right: 4px;
